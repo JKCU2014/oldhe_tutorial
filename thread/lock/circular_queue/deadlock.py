@@ -1,3 +1,4 @@
+import time
 import threading
 
 
@@ -20,7 +21,7 @@ class DeadLockQueue:
         """
         with self.lock:
             while self.is_full():
-                continue
+                time.sleep(0)
             self.queue[self.tail] = message
             self.tail = (self.tail + 1) % len(self.queue)
             self.count += 1
@@ -28,14 +29,15 @@ class DeadLockQueue:
     def remove(self):
         """ Pop a message at the head of this circular_queue.
 
-        :precondition: not is_empty()
-
         :return: the message that is at the head of this circular_queue
         """
-        message = self.queue[self.head]
-        self.head = (self.head + 1) % len(self.queue)
-        self.count -= 1
-        return message
+        with self.lock:
+            while self.is_empty():
+                time.sleep(0)
+            message = self.queue[self.head]
+            self.head = (self.head + 1) % len(self.queue)
+            self.count -= 1
+            return message
 
     def is_empty(self):
         return self.count == 0
