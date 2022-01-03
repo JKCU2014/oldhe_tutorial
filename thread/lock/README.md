@@ -20,9 +20,11 @@ lock
 ├── __init__.py
 ├── circular_queue              # 固定大小缓冲区实现主要源码
 │	 ├── deadlock.py        # 会造成死锁的实现
+│	 ├── safe.py            # 使用 `Condition` 的线程安全的实现
 │	 └── unsafe.py          # 线程不安全的实现
 ├── dinning_philosopher         # 哲学家就餐问题主要源码
 │	 ├── fork.py            # 模拟哲学家左右两边的叉子
 │	 └── philosopher.py     # 哲学家的几种实现方式，造成死锁和不会造成死锁的都有
+├── singleton                   # 线程安全的单例模式装饰器
 └── thread_lock_note.ipynb      # 代码演示 notebook
 ```
